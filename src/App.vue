@@ -17,45 +17,48 @@
 
           <hr class="divider"/>
 
-          <el-card shadow="never">
+          <el-card v-for="(item, index) in selectedCurrency" shadow="never" class="mb-20" :key="index">
             <el-row :gutter="20" type="flex" align="middle">
               <el-col :span="20">
                 <div>
                   <el-row :gutter="20" type="flex" justify="space-between">
                     <el-col :span="4">
-                      <label class="text-20 bold">IDR</label>
+                      <label class="text-20 bold">{{ item.currency }}</label>
                     </el-col>
                     <el-col :span="20" class="right">
-                      <label class="text-20 bold">144,105,011</label>
+                      <label class="text-20 bold">{{ getRate(amount, item.value).toLocaleString('US') }}</label>
                     </el-col>
                   </el-row>
-                  <h5 class="mt-10 mb-10"><i>IDR - Indonesian Rupiah</i></h5>
-                  <label class="text-12"><i>1 USD = IDR <span>14,140,000</span></i></label>
+                  <h5 class="mt-10 mb-10"><i>{{ `${item.currency} - ${item.detail}` }}</i></h5>
+                  <label class="text-12">
+                    <i>1 USD = {{ item.currency }} <span>{{ item.value.toLocaleString('US') }}</span></i>
+                  </label>
                 </div>
               </el-col>
 
               <el-col :span="4">
                 <div class="center">
-                  <i class="el-icon-delete"></i>
+                  <i class="el-icon-delete" @click="removeCurrency(index)"></i>
                 </div>
               </el-col>
             </el-row>
           </el-card>
 
-          <el-row :gutter="20" type="flex" align="middle" class="mt-20">
+          <el-row :gutter="20" type="flex" align="middle">
             <el-col :span="16">
               <el-select v-model="currency" placeholder="Add More Currencies" class="fluid">
                 <el-option
                   v-for="item in currencies"
                   :key="item.value"
                   :label="item.label"
-                  :value="item.value"
+                  :value="item"
+                  :disabled="setDisabledOption(item.label)"
                 >
                 </el-option>
               </el-select>
             </el-col>
             <el-col :span="8">
-              <el-button type="primary" class="fluid">Submit</el-button>
+              <el-button type="primary" class="fluid" @click="addCurrency">Submit</el-button>
             </el-col>
           </el-row>
         </el-card>
@@ -65,6 +68,10 @@
 </template>
 
 <script>
+/* eslint-disable no-console */
+
+import axios from 'axios';
+
 export default {
   name: 'app',
   data() {
@@ -73,42 +80,53 @@ export default {
       currencies: [
         {
           value: 'USD',
-          label: 'USD'
+          label: 'USD',
+          detail: 'United States Dollars'
         },
         {
           value: 'CAD',
-          label: 'CAD'
+          label: 'CAD',
+          detail: 'Canadian Dollars'
         },
         {
           value: 'IDR',
-          label: 'IDR'
+          label: 'IDR',
+          detail: 'Indonesian Rupiah'
         },
         {
           value: 'GBP',
-          label: 'GBP'
+          label: 'GBP',
+          detail: 'British Pounds'
         },
         {
           value: 'SGD',
-          label: 'SGD'
+          label: 'SGD',
+          detail: 'Singapore Dollars'
         },
         {
           value: 'INR',
-          label: 'INR'
+          label: 'INR',
+          detail: 'Indian Rupees'
         },
         {
           value: 'MYR',
-          label: 'MYR'
+          label: 'MYR',
+          detail: 'Malaysian Ringgits'
         },
         {
           value: 'JPY',
-          label: 'JPY'
+          label: 'JPY',
+          detail: 'Japanese Yen'
         },
         {
           value: 'KRW',
-          label: 'KRW'
+          label: 'KRW',
+          detail: 'South Korean Won'
         }
       ],
-      currency: ''
+      currency: '',
+      selectedCurrency: [],
+      rates: {}
     };
   },
   watch: {
@@ -123,6 +141,7 @@ export default {
   },
   mounted() {
     this.amount = '10000';
+    this.getCurrency();
   },
   methods: {
     isNumber (evt) {
@@ -132,6 +151,40 @@ export default {
       } else {
           return true
       }
+    },
+    roundNum(num) {
+        return +(Math.round(num + "e+2")  + "e-2");
+    },
+    convertAmountToNumber(val) {
+      return val.replace(/(\d+).(?=\d{3}(\D|$))/g, '$1');
+    },
+    getRate(amount, rate) {
+      return this.roundNum(this.convertAmountToNumber(amount) * rate);
+    },
+    getCurrency() {
+      axios.get('https://api.exchangeratesapi.io/latest?base=USD')
+        .then((response) => {
+          const { data: { rates }} = response;
+          this.rates = rates;
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    },
+    addCurrency() {
+      this.selectedCurrency.push({
+        currency: this.currency.label,
+        detail: this.currency.detail,
+        value: this.roundNum(this.rates[this.currency.label])
+      });
+      this.currency = '';
+    },
+    removeCurrency(index) {
+      this.selectedCurrency.splice(index, 1);
+    },
+    setDisabledOption(option) {
+      const checkOption = this.selectedCurrency.find(currency => currency.currency === option);
+      return typeof checkOption !== 'undefined';
     }
   }
 }

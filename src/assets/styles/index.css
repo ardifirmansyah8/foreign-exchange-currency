@@ -65,3 +65,7 @@ input[type=number]::-webkit-outer-spin-button {
 .amount .el-input__inner {
     text-align: right;
 }
+
+[class*=" el-icon-"], [class^=el-icon-] {
+    cursor: pointer;
+}
