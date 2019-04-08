@@ -1,8 +1,15 @@
-import Vue from 'vue'
-import App from './App.vue'
+import Vue from 'vue';
+import Element from 'element-ui';
 
-Vue.config.productionTip = false
+import App from './App.vue';
+
+import 'element-ui/lib/theme-chalk/index.css';
+import './assets/styles/index.css';
+
+Vue.config.productionTip = false;
+
+Vue.use(Element);
 
 new Vue({
   render: h => h(App),
-}).$mount('#app')
+}).$mount('#app');

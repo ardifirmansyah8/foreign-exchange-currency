@@ -1,0 +1,67 @@
+/* Input */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
+}
+
+/* Align */
+.center {
+    text-align: center;
+}
+
+.right {
+    text-align: right;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+/* Font */
+.text-12 {
+    font-size: 12px;
+}
+
+.text-20 {
+    font-size: 20px;
+}
+
+/* Margin */
+.mt-10 {
+    margin-top: 10px;
+}
+
+.mt-20 {
+    margin-top: 20px;
+}
+
+.mb-10 {
+    margin-bottom: 10px;
+}
+
+.mb-20 {
+    margin-bottom: 20px;
+}
+
+/* Container */
+.fluid {
+    width: 100%;
+}
+
+/* Divider */
+.divider {
+    margin: 20px -20px;
+}
+
+/* Custom */
+.amount .el-form-item__label {
+    text-align: left;
+    font-weight: bold;
+}
+
+.amount .el-input__inner {
+    text-align: right;
+}
