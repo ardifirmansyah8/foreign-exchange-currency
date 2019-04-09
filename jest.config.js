@@ -7,6 +7,7 @@ module.exports = {
     '!<rootDir>/public/*',
     '!<rootDir>/dist/*',
     '!<rootDir>/tests/*',
+    '!<rootDir>/coverage/*',
   ],
   moduleFileExtensions: [
     'js',

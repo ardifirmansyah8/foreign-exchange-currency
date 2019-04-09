@@ -9,7 +9,9 @@
                 <label class="text-20 bold">{{ data.currency }}</label>
               </el-col>
               <el-col :span="20" class="right">
-                <label class="text-20 bold">{{ getRate(amount, data.value).toLocaleString('US') }}</label>
+                <label class="text-20 bold">
+                  {{ getRate(amount, data.value) }}
+                </label>
               </el-col>
             </el-row>
             <h5 class="mt-10 mb-10"><i>{{ `${data.currency} - ${data.detail}` }}</i></h5>
@@ -36,38 +38,29 @@ export default {
     data: {
       type: Object,
       required: true,
-      default: () => {}
     },
     index: {
       type: Number,
       required: true,
-      default: () => 0
     },
     amount: {
       type: String,
       required: true,
-      default: () => '0'
     },
     remove: {
       type: Function,
       required: true,
-      default: () => {}
     },
     round: {
       type: Function,
       required: true,
-      default: () => {}
-    }
-  },
-  data() {
-    return {
-      selectedCurrency: []
-    };
+    },
   },
   methods: {
     getRate(amount, rate) {
-      return this.round(Number(amount) * rate);
-    }
-  }
-}
+      const totalAmount = this.round(Number(amount) * rate);
+      return totalAmount.toLocaleString('US');
+    },
+  },
+};
 </script>

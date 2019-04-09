@@ -27,8 +27,7 @@ export default {
     selectedCurrency: {
       type: Array,
       required: true,
-      default: () => []
-    }
+    },
   },
   data() {
     return {
@@ -36,48 +35,48 @@ export default {
         {
           value: 'USD',
           label: 'USD',
-          detail: 'United States Dollars'
+          detail: 'United States Dollars',
         },
         {
           value: 'CAD',
           label: 'CAD',
-          detail: 'Canadian Dollars'
+          detail: 'Canadian Dollars',
         },
         {
           value: 'IDR',
           label: 'IDR',
-          detail: 'Indonesian Rupiah'
+          detail: 'Indonesian Rupiah',
         },
         {
           value: 'GBP',
           label: 'GBP',
-          detail: 'British Pounds'
+          detail: 'British Pounds',
         },
         {
           value: 'SGD',
           label: 'SGD',
-          detail: 'Singapore Dollars'
+          detail: 'Singapore Dollars',
         },
         {
           value: 'INR',
           label: 'INR',
-          detail: 'Indian Rupees'
+          detail: 'Indian Rupees',
         },
         {
           value: 'MYR',
           label: 'MYR',
-          detail: 'Malaysian Ringgits'
+          detail: 'Malaysian Ringgits',
         },
         {
           value: 'JPY',
           label: 'JPY',
-          detail: 'Japanese Yen'
+          detail: 'Japanese Yen',
         },
         {
           value: 'KRW',
           label: 'KRW',
-          detail: 'South Korean Won'
-        }
+          detail: 'South Korean Won',
+        },
       ],
       currency: '',
     };
@@ -90,7 +89,7 @@ export default {
     add() {
       this.$emit('addCurrency', this.currency);
       this.currency = '';
-    }
-  }
-}
+    },
+  },
+};
 </script>
