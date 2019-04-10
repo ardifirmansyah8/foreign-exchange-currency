@@ -14,7 +14,9 @@
         </el-select>
       </el-col>
       <el-col :span="8">
-        <el-button type="primary" class="fluid" @click="add">Submit</el-button>
+        <el-button type="primary" class="fluid" @click="add" :disabled="currency === ''">
+          Submit
+        </el-button>
       </el-col>
     </el-row>
   </div>
